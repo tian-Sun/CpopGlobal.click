@@ -43,16 +43,22 @@ var public_vars = public_vars || {};
 		// Page Loading Overlay
 		if(public_vars.$pageLoadingOverlay.length)
 		{
-			$(window).load(function()
+			$(window).on('load', function()
 			{
-				public_vars.$pageLoadingOverlay.addClass('loaded');
+				public_vars.$pageLoadingOverlay.fadeOut({
+					duration: 500,
+					queue: false
+				});
 			});
 		}
 
 		window.onerror = function()
 		{
 			// failsafe remove loading overlay
-			public_vars.$pageLoadingOverlay.addClass('loaded');
+			public_vars.$pageLoadingOverlay.fadeOut({
+				duration: 500,
+				queue: false
+			});
 		}
 
 
@@ -171,13 +177,14 @@ var public_vars = public_vars || {};
 		$('body').on('click', 'a[rel="go-top"]', function(ev)
 		{
 			ev.preventDefault();
-
 			var obj = {pos: $(window).scrollTop()};
-
-			TweenLite.to(obj, .3, {pos: 0, ease:Power4.easeOut, onUpdate: function()
-			{
-				$(window).scrollTop(obj.pos);
-			}});
+			
+			$('html, body').stop().animate({
+				scrollTop: 0
+			}, {
+				duration: 500,
+				queue: false
+			});
 		});
 
 
@@ -1130,7 +1137,58 @@ function setup_sidebar_menu()
 
 		$items_with_subs.filter('.active').addClass('expanded');
 
-		// On larger screens collapse sidebar when the window is tablet screen
+		// 处理所有菜单项的点击
+		$(".sidebar-menu").on('click', 'a', function(ev)
+		{
+			console.log("Sidebar menu item clicked"); // Debug log
+			
+			var $this = $(this),
+				$parent = $this.parent('li');
+			
+			// If has submenu
+			if($parent.hasClass('has-sub'))
+			{
+				ev.preventDefault();
+				
+				if(!$parent.hasClass('expanded'))
+				{
+					console.log("Expanding submenu"); // Debug log
+					sidebar_menu_item_expand($parent, sm_transition_delay);
+				}
+				else
+				{
+					console.log("Collapsing submenu"); // Debug log
+					sidebar_menu_item_collapse($parent, sm_transition_delay);
+				}
+			}
+			// If is anchor link
+			else if($this.attr('href') && $this.attr('href').indexOf('#') === 0)
+			{
+				ev.preventDefault();
+				console.log("Anchor link clicked: " + $this.attr('href')); // Debug log
+				
+				var $target = $($this.attr('href'));
+				if($target.length)
+				{
+					var topOffset = $target.offset().top - 50; // Account for fixed header
+					console.log("Scrolling to offset: " + topOffset); // Debug log
+					
+					$('html, body').stop().animate({
+						scrollTop: topOffset
+					}, {
+						duration: 500,
+						queue: false
+					});
+				}
+			}
+			// If is regular link
+			else
+			{
+				console.log("Regular link clicked: " + $this.attr('href')); // Debug log
+			}
+		});
+
+		// 响应式处理
 		if(is('largescreen') && public_vars.$sidebarMenu.hasClass('collapsed') == false)
 		{
 			$(window).on('resize', function()
@@ -1148,120 +1206,21 @@ function setup_sidebar_menu()
 				}
 			});
 		}
-
-		$items_with_subs.each(function(i, el)
-		{
-			var $li = jQuery(el),
-				$a = $li.children('a'),
-				$sub = $li.children('ul');
-
-			$li.addClass('has-sub');
-
-			$a.on('click', function(ev)
-			{
-				ev.preventDefault();
-
-				if(toggle_others)
-				{
-					sidebar_menu_close_items_siblings($li);
-				}
-
-				if($li.hasClass('expanded') || $li.hasClass('opened'))
-					sidebar_menu_item_collapse($li, $sub);
-				else
-					sidebar_menu_item_expand($li, $sub);
-			});
-		});
 	}
 }
 
-function sidebar_menu_item_expand($li, $sub)
+function sidebar_menu_item_expand($item, transition_delay)
 {
-	if($li.data('is-busy') || ($li.parent('.main-menu').length && public_vars.$sidebarMenu.hasClass('collapsed')))
-		return;
-
-	$li.addClass('expanded').data('is-busy', true);
-	$sub.show();
-
-	var $sub_items 	  = $sub.children(),
-		sub_height	= $sub.outerHeight(),
-
-		win_y			 = jQuery(window).height(),
-		total_height	  = $li.outerHeight(),
-		current_y		 = public_vars.$sidebarMenu.scrollTop(),
-		item_max_y		= $li.position().top + current_y,
-		fit_to_viewpport  = public_vars.$sidebarMenu.hasClass('fit-in-viewport');
-
-	$sub_items.addClass('is-hidden');
-	$sub.height(0);
-
-
-	TweenMax.to($sub, sm_duration, {css: {height: sub_height}, onUpdate: ps_update, onComplete: function(){
-		$sub.height('');
-	}});
-
-	var interval_1 = $li.data('sub_i_1'),
-		interval_2 = $li.data('sub_i_2');
-
-	window.clearTimeout(interval_1);
-
-	interval_1 = setTimeout(function()
-	{
-		$sub_items.each(function(i, el)
-		{
-			var $sub_item = jQuery(el);
-
-			$sub_item.addClass('is-shown');
-		});
-
-		var finish_on = sm_transition_delay * $sub_items.length,
-			t_duration = parseFloat($sub_items.eq(0).css('transition-duration')),
-			t_delay = parseFloat($sub_items.last().css('transition-delay'));
-
-		if(t_duration && t_delay)
-		{
-			finish_on = (t_duration + t_delay) * 1000;
-		}
-
-		// In the end
-		window.clearTimeout(interval_2);
-
-		interval_2 = setTimeout(function()
-		{
-			$sub_items.removeClass('is-hidden is-shown');
-
-		}, finish_on);
-
-
-		$li.data('is-busy', false);
-
-	}, 0);
-
-	$li.data('sub_i_1', interval_1),
-	$li.data('sub_i_2', interval_2);
+	$item.addClass('expanded');
+	$item.children('ul').show();
+	ps_update(true);
 }
 
-function sidebar_menu_item_collapse($li, $sub)
+function sidebar_menu_item_collapse($item, transition_delay)
 {
-	if($li.data('is-busy'))
-		return;
-
-	var $sub_items = $sub.children();
-
-	$li.removeClass('expanded').data('is-busy', true);
-	$sub_items.addClass('hidden-item');
-
-	TweenMax.to($sub, sm_duration, {css: {height: 0}, onUpdate: ps_update, onComplete: function()
-	{
-		$li.data('is-busy', false).removeClass('opened');
-
-		$sub.attr('style', '').hide();
-		$sub_items.removeClass('hidden-item');
-
-		$li.find('li.expanded ul').attr('style', '').hide().parent().removeClass('expanded');
-
-		ps_update(true);
-	}});
+	$item.removeClass('expanded');
+	$item.children('ul').hide();
+	ps_update(true);
 }
 
 function sidebar_menu_close_items_siblings($li)
@@ -1641,11 +1600,6 @@ function date(format, timestamp) {
 	// improved by: Theriault
 	// improved by: Theriault
 	// improved by: Brett Zamir (http://brett-zamir.me)
-	// improved by: Theriault
-	// improved by: Thomas Beaucourt (http://www.webapp.fr)
-	// improved by: JT
-	// improved by: Theriault
-	// improved by: Rafał Kukawski (http://blog.kukawski.pl)
 	// improved by: Theriault
 	//	input by: Brett Zamir (http://brett-zamir.me)
 	//	input by: majak

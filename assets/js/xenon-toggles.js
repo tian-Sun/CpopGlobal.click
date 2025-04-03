@@ -9,8 +9,116 @@
 {
 	"use strict";
 
+	// Helper function to get attribute with default value
+	function attrDefault($elem, attr, defaultValue)
+	{
+		var value = $elem.attr(attr);
+		return (value !== undefined) ? value : defaultValue;
+	}
+
+	// Toggles
+	var Toggles = {
+		init: function()
+		{
+			// Initialize toggles
+			this.initToggles();
+			this.initMobileMenu();
+			this.initPanelNavigation();
+			this.initSmoothScroll();
+		},
+
+		initToggles: function()
+		{
+			$('.xe-toggle').each(function()
+			{
+				var $toggle = $(this);
+				var $target = $($toggle.data('target'));
+				
+				if($target.length)
+				{
+					$toggle.on('click', function(e)
+					{
+						e.preventDefault();
+						
+						// 检查是否是外部链接
+						var href = $(this).attr('href');
+						if(href && !href.startsWith('#')) {
+							window.location.href = href;
+							return;
+						}
+						
+						$target.slideToggle(200);
+					});
+				}
+			});
+		},
+
+		initMobileMenu: function()
+		{
+			// Mobile Menu Toggle
+			$('a[data-toggle="mobile-menu"]').on('click', function(e)
+			{
+				e.preventDefault();
+				$('.main-menu').toggleClass('mobile-is-visible');
+			});
+
+			// User Info Menu Toggle
+			$('a[data-toggle="user-info-menu"]').on('click', function(e)
+			{
+				e.preventDefault();
+				$('.user-info-menu').toggleClass('mobile-is-visible');
+			});
+		},
+
+		initPanelNavigation: function()
+		{
+			// Panel Navigation Toggle
+			$('a[data-toggle="panel"]').on('click', function(e)
+			{
+				e.preventDefault();
+				var $panel = $(this).closest('.panel');
+				$panel.toggleClass('collapsed');
+			});
+
+			// Panel Close
+			$('a[data-toggle="remove"]').on('click', function(e)
+			{
+				e.preventDefault();
+				var $panel = $(this).closest('.panel');
+				$panel.fadeOut(200, function()
+				{
+					$(this).remove();
+				});
+			});
+		},
+
+		initSmoothScroll: function()
+		{
+			// Smooth Scroll
+			$('.smooth').on('click', function(e)
+			{
+				e.preventDefault();
+				var target = $(this).attr('href');
+				if (target === '#') return;
+				
+				var $target = $(target);
+				if ($target.length)
+				{
+					$('html, body').animate({
+						scrollTop: $target.offset().top - 50
+					}, {
+						duration: 500,
+						queue: false
+					});
+				}
+			});
+		}
+	};
+
 	$(document).ready(function()
 	{
+		// Initialize toggles
+		Toggles.init();
 
 		// Chat Toggler
 		$('a[data-toggle="chat"]').each(function(i, el)
@@ -133,17 +241,6 @@
 
 
 
-		// Mobile Menu Trigger
-		$('a[data-toggle="mobile-menu"]').on('click', function(ev)
-		{
-			ev.preventDefault();
-
-			public_vars.$mainMenu.add(public_vars.$sidebarProfile).toggleClass('mobile-is-visible');
-			ps_destroy();
-		});
-
-
-
 		// Mobile Menu Trigger for Horizontal Menu
 		$('a[data-toggle="mobile-menu-horizontal"]').on('click', function(ev)
 		{
@@ -167,17 +264,6 @@
 
 
 
-		// Mobile User Info Menu Trigger
-		$('a[data-toggle="user-info-menu"]').on('click', function(ev)
-		{
-			ev.preventDefault();
-
-			public_vars.$userInfoMenu.toggleClass('mobile-is-visible');
-
-		});
-
-
-
 		// Mobile User Info Menu Trigger for Horizontal Menu
 		$('a[data-toggle="user-info-menu-horizontal"]').on('click', function(ev)
 		{
@@ -185,24 +271,6 @@
 
 			public_vars.$userInfoMenuHor.find('.nav.nav-userinfo').toggleClass('mobile-is-visible');
 
-		});
-
-
-
-		// Panel Close
-		$('body').on('click', '.panel a[data-toggle="remove"]', function(ev)
-		{
-			ev.preventDefault();
-
-			var $panel = $(this).closest('.panel'),
-				$panel_parent = $panel.parent();
-
-			$panel.remove();
-
-			if($panel_parent.children().length == 0)
-			{
-				$panel_parent.remove();
-			}
 		});
 
 
@@ -227,18 +295,6 @@
 				});
 
 			}, 500 + 300 * (Math.random() * 5));
-		});
-
-
-
-		// Panel Expand/Collapse Toggle
-		$('body').on('click', '.panel a[data-toggle="panel"]', function(ev)
-		{
-			ev.preventDefault();
-
-			var $panel = $(this).closest('.panel');
-
-			$panel.toggleClass('collapsed');
 		});
 
 

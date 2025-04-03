@@ -65,3 +65,34 @@
 .img-circle {
     padding: 7px 0;
 }
+
+.sidebar-menu .main-menu a {
+    cursor: pointer !important;
+}
+
+.sidebar-menu .main-menu a:hover {
+    color: #fff !important;
+    background-color: rgba(69, 74, 84, 0.3) !important;
+}
+
+.language-switch {
+    text-align: right;
+    padding: 10px;
+    position: relative;
+    z-index: 100;
+}
+
+.language-switch .btn {
+    font-size: 12px;
+    padding: 4px 12px;
+    cursor: pointer !important;
+}
+
+.language-switch .btn i {
+    margin-right: 5px;
+}
+
+.language-switch .btn:hover {
+    background-color: #2c2e2f !important;
+    color: #fff !important;
+}
