@@ -6,9 +6,10 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4M1MGED0J"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
-
         gtag('config', 'G-N4M1MGED0J');
     </script>
     <meta charset="utf-8">
@@ -65,10 +66,10 @@
                 <header class="logo-env">
                     <div class="logo">
                         <a href="index.html" class="logo-expanded">
-                            <div style="font-size: 32px; font-weight: bold; color: #fff;">C</div>
+                            <img src="../assets/images/logo.png" width="120" alt="CpopGlobal Logo">
                         </a>
                         <a href="index.html" class="logo-collapsed">
-                            <div style="font-size: 24px; font-weight: bold; color: #fff;">C</div>
+                            <img src="../assets/images/logo.png" width="40" alt="CpopGlobal Logo">
                         </a>
                     </div>
                     <div class="mobile-menu-toggle visible-xs">
@@ -78,7 +79,7 @@
                     </div>
                 </header>
                 <div class="sidebar-menu-inner">
-                    <div class="language-switch" style="text-align: right; padding: 10px;">
+                    <div class="language-switch" style="text-align: right; padding-right: 10px;">
                         <a href="../en/index.html" class="btn btn-info btn-sm">
                             <i class="fa fa-globe"></i> English
                         </a>
@@ -114,108 +115,311 @@
         </div>
         <div class="main-content">
             <div class="row">
-                <div class="col-sm-12 page-main">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">快速搜索</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="search-container">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="searchType">
+                                            <option value="ip">IP作品</option>
+                                            <option value="artist">艺人</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-sm-12">
+                                        <div id="ipSearchTabs" class="platform-tabs">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#" data-platform="baidu">百度百科</a></li>
+                                                <li><a href="#" data-platform="mydramalist">Mydramalist</a></li>
+                                                <li><a href="#" data-platform="douban">豆瓣</a></li>
+                                                <li><a href="#" data-platform="xiaohongshu">小红书</a></li>
+                                                <li><a href="#" data-platform="weibo">微博</a></li>
+                                                <li><a href="#" data-platform="instagram">Instagram</a></li>
+                                                <li><a href="#" data-platform="youtube">YouTube</a></li>
+                                                <li><a href="#" data-platform="facebook">Facebook</a></li>
+                                                <li><a href="#" data-platform="tiktok">TikTok</a></li>
+                                                <li><a href="#" data-platform="twitter">Twitter</a></li>
+                                            </ul>
+                                        </div>
+                                        <div id="artistSearchTabs" class="platform-tabs" style="display: none;">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#" data-platform="baidu">百度百科</a></li>
+                                                <li><a href="#" data-platform="weibo_personal">微博个人</a></li>
+                                                <li><a href="#" data-platform="weibo_studio">微博工作室</a></li>
+                                                <li><a href="#" data-platform="xiaohongshu">小红书</a></li>
+                                                <li><a href="#" data-platform="instagram">Instagram</a></li>
+                                                <li><a href="#" data-platform="youtube">YouTube</a></li>
+                                                <li><a href="#" data-platform="facebook">Facebook</a></li>
+                                                <li><a href="#" data-platform="tiktok">TikTok</a></li>
+                                                <li><a href="#" data-platform="twitter">Twitter</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="searchInput" placeholder="请输入搜索关键词">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-info btn-block" onclick="performSearch()">
+                                            <i class="fa fa-search"></i> 搜索
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
+                <div class="col-sm-12 page-main">
+                    <div class="row">
                         <div class="col-xs-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title" id="平台与榜单">播放平台与趋势</h3>
-                            </div>
+                                </div>
                                 <div class="panel-body">
-            <div class="row">
+                                    <div class="row">
                                         <div class="col-sm-4 col-md-3">
                                             <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://v.qq.com/channel/tv', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="腾讯视频电视剧频道">
-                        <div class="xe-comment-entry">
+                                                <div class="xe-comment-entry">
                                                     <div class="xe-user-img">
                                                         <img src="../assets/images/tools/tengxun.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
+                                                    </div>
+                                                    <div class="xe-comment">
                                                         <div class="xe-user-name overflowClip_1">
                                                             <strong>腾讯视频电视剧频道</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-4 col-md-3">
                                             <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.iqiyi.com/tv/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="爱奇艺电视剧频道">
-                        <div class="xe-comment-entry">
+                                                <div class="xe-comment-entry">
                                                     <div class="xe-user-img">
                                                         <img src="../assets/images/tools/iqiyi.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
+                                                    </div>
+                                                    <div class="xe-comment">
                                                         <div class="xe-user-name overflowClip_1">
                                                             <strong>爱奇艺电视剧频道</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-4 col-md-3">
                                             <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.youku.com/ku/webtv', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="优酷电视剧频道">
-                        <div class="xe-comment-entry">
+                                                <div class="xe-comment-entry">
                                                     <div class="xe-user-img">
                                                         <img src="../assets/images/tools/youku.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
+                                                    </div>
+                                                    <div class="xe-comment">
                                                         <div class="xe-user-name overflowClip_1">
                                                             <strong>优酷电视剧频道</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-4 col-md-3">
                                             <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.mgtv.com/tv', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="芒果tv电视剧频道">
-                        <div class="xe-comment-entry">
+                                                <div class="xe-comment-entry">
                                                     <div class="xe-user-img">
                                                         <img src="../assets/images/tools/mgtv.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
+                                                    </div>
+                                                    <div class="xe-comment">
                                                         <div class="xe-user-name overflowClip_1">
                                                             <strong>芒果tv电视剧频道</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-3">
+                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://site.v-pulse.com/zh_cn', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="V-Pulse">
+                                                <div class="xe-comment-entry">
+                                                    <div class="xe-user-img">
+                                                        <img src="../assets/images/tools/vpulse.png" class="img-circle" width="40">
+                                                    </div>
+                                                    <div class="xe-comment">
+                                                        <div class="xe-user-name overflowClip_1">
+                                                            <strong>V-Pulse</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-3">
+                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.weibo.com/hot/entertainment', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="微博娱乐热搜">
+                                                <div class="xe-comment-entry">
+                                                    <div class="xe-user-img">
+                                                        <img src="../assets/images/tools/weibo.png" class="img-circle" width="40">
+                                                    </div>
+                                                    <div class="xe-comment">
+                                                        <div class="xe-user-name overflowClip_1">
+                                                            <strong>微博娱乐热搜</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-3">
+                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://tian-sun.github.io/vpulse-tracker', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="V-Pulse Top10榜单爬取">
+                                                <div class="xe-comment-entry">
+                                                    <div class="xe-user-img">
+                                                        <img src="../assets/images/tools/vpulse.png" class="img-circle" width="40">
+                                                    </div>
+                                                    <div class="xe-comment">
+                                                        <div class="xe-user-name overflowClip_1">
+                                                            <strong>V-Pulse Top10榜单爬取</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" id="了解信息">了解信息+收集媒资</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
                                 <div class="col-sm-4 col-md-3">
-                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://site.v-pulse.com/zh_cn', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="V-Pulse">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://admin.v-pulse.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="V-Pulse 后台">
                                         <div class="xe-comment-entry">
                                             <div class="xe-user-img">
                                                 <img src="../assets/images/tools/vpulse.png" class="img-circle" width="40">
                                             </div>
                                             <div class="xe-comment">
                                                 <div class="xe-user-name overflowClip_1">
-                                                    <strong>V-Pulse</strong>
+                                                    <strong>V-Pulse 后台</strong>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-md-3">
-                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.weibo.com/hot/entertainment', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="微博娱乐热搜">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.weibo.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="微博">
                                         <div class="xe-comment-entry">
                                             <div class="xe-user-img">
                                                 <img src="../assets/images/tools/weibo.png" class="img-circle" width="40">
                                             </div>
                                             <div class="xe-comment">
                                                 <div class="xe-user-name overflowClip_1">
-                                                    <strong>微博娱乐热搜</strong>
+                                                    <strong>微博</strong>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-md-3">
-                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://tian-sun.github.io/vpulse-tracker', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="V-Pulse Top10榜单爬取">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.douban.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="豆瓣">
                                         <div class="xe-comment-entry">
                                             <div class="xe-user-img">
-                                                <img src="../assets/images/tools/vpulse.png" class="img-circle" width="40">
+                                                <img src="../assets/images/tools/douban.png" class="img-circle" width="40">
                                             </div>
                                             <div class="xe-comment">
                                                 <div class="xe-user-name overflowClip_1">
-                                                    <strong>V-Pulse Top10榜单爬取</strong>
+                                                    <strong>豆瓣</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://mydramalist.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mydramalist">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/mydramalist.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>Mydramalist</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.youtube.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="YouTube">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/youtube.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>YouTube</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.tiktok.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="TikTok">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/tiktok.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>TikTok</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.facebook.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Facebook">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/facebook.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>Facebook</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.instagram.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Instagram">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/instagram.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>Instagram</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://twitter.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="X">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/twitter.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>X</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -225,223 +429,80 @@
                         </div>
                     </div>
                 </div>
-                            </div>
-
-            <div class="row">
-                        <div class="col-xs-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title" id="了解信息">了解信息+收集媒资</h3>
-                            </div>
-                                <div class="panel-body">
-            <div class="row">
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://admin.v-pulse.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="V-Pulse 后台">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/vpulse.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>V-Pulse 后台</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.weibo.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="微博">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/weibo.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>微博</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.douban.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="豆瓣">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/douban.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>豆瓣</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://mydramalist.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mydramalist">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/mydramalist.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>Mydramalist</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.youtube.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="YouTube">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/youtube.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>YouTube</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.tiktok.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="TikTok">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/tiktok.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>TikTok</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.facebook.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Facebook">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/facebook.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>Facebook</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.instagram.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Instagram">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/instagram.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>Instagram</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://twitter.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="X">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/twitter.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>X</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                            </div>
-                        </div>
-
             <div class="row">
-                        <div class="col-xs-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title" id="工具">工具</h3>
-                            </div>
-                                <div class="panel-body">
-            <div class="row">
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://chat.openai.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="处理数据：GPT">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/gpt.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>处理数据：GPT</strong>
-                            </div>
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" id="工具">工具</h3>
                         </div>
-                    </div>
-                </div>
-                            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.xiaohongshu.com', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="发布帖子（小红书）">
-                        <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/xiaohongshu.png" class="img-circle" width="40">
-                            </div>
-                            <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>发布帖子（小红书）</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://tian-sun.github.io/feeter/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="专注任务工具">
-                                                <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/feeter.png" class="img-circle" width="40">
-                                                    </div>
-                                                    <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>专注任务工具</strong>
-                                                        </div>
-                                                    </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://chat.openai.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="处理数据：GPT">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/gpt.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>处理数据：GPT</strong>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://squoosh.app/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="压缩图片">
-                                                <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/squoosh.png" class="img-circle" width="40">
-                                                    </div>
-                                                    <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>压缩图片</strong>
-                                                        </div>
-                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://www.xiaohongshu.com', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="发布帖子（小红书）">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/xiaohongshu.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>发布帖子（小红书）</strong>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 col-md-3">
-                                            <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://youtube.iiilab.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="压缩图片">
-                                                <div class="xe-comment-entry">
-                                                    <div class="xe-user-img">
-                                                        <img src="../assets/images/tools/squoosh.png" class="img-circle" width="40">
-                                                    </div>
-                                                    <div class="xe-comment">
-                                                        <div class="xe-user-name overflowClip_1">
-                                                            <strong>Youtube 下载器</strong>
-                                                        </div>
-                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://tian-sun.github.io/feeter/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="专注任务工具">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/feeter.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>专注任务工具</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://squoosh.app/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="压缩图片">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/squoosh.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>压缩图片</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://youtube.iiilab.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Youtube下载器">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/youtube.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>Youtube下载器</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -451,20 +512,19 @@
                         </div>
                     </div>
                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-                            </div>
+        </div>
+    </div>
+    <!-- Bottom Scripts -->
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/TweenMax.min.js"></script>
     <script src="../assets/js/resizeable.js"></script>
     <script src="../assets/js/joinable.js"></script>
     <script src="../assets/js/xenon-api.js"></script>
     <script src="../assets/js/xenon-toggles.js"></script>
-    <script src="../assets/js/xenon-widgets.js"></script>
+    <script src="../assets/js/xenon-widgets.js"></script>   
     <script src="../assets/js/xenon-init.js"></script>
+    <script src="../assets/js/xenon-custom.js"></script>
 </body>
 
 </html>

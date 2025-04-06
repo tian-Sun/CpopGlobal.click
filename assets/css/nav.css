@@ -1,3 +1,17 @@
+.logo-env .logo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.logo-expanded img {
+    transition: all 0.3s ease;
+}
+
+.logo-collapsed img {
+    transition: all 0.3s ease;
+}
+
 .box2 {
     height: 86px;
     cursor: pointer;
@@ -95,4 +109,59 @@
 .language-switch .btn:hover {
     background-color: #2c2e2f !important;
     color: #fff !important;
+}
+
+.search-container {
+    padding: 15px 0;
+}
+
+.search-links {
+    margin-top: 10px;
+}
+
+.search-links .btn {
+    margin: 5px;
+}
+
+.search-links .btn:hover {
+    background-color: #2c2e2f;
+    color: #fff;
+}
+
+.platform-tabs {
+    margin-bottom: 15px;
+}
+
+.platform-tabs .nav-tabs {
+    border-bottom: 1px solid #ddd;
+}
+
+.platform-tabs .nav-tabs > li {
+    margin-bottom: -1px;
+}
+
+.platform-tabs .nav-tabs > li > a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    padding: 8px 15px;
+    color: #666;
+    cursor: pointer;
+}
+
+.platform-tabs .nav-tabs > li > a:hover {
+    border-color: #eee #eee #ddd;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.platform-tabs .nav-tabs > li.active > a,
+.platform-tabs .nav-tabs > li.active > a:hover,
+.platform-tabs .nav-tabs > li.active > a:focus {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: pointer;
 }

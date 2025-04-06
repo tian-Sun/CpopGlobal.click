@@ -52,10 +52,10 @@
                 <header class="logo-env">
                     <div class="logo">
                         <a href="index.html" class="logo-expanded">
-                            <div style="font-size: 32px; font-weight: bold; color: #fff;">C</div>
+                            <img src="../assets/images/logo.png" width="120" alt="CpopGlobal Logo">
                         </a>
                         <a href="index.html" class="logo-collapsed">
-                            <div style="font-size: 24px; font-weight: bold; color: #fff;">C</div>
+                            <img src="../assets/images/logo.png" width="40" alt="CpopGlobal Logo">
                         </a>
                     </div>
                     <div class="mobile-menu-toggle visible-xs">
@@ -100,6 +100,69 @@
             </div>
         </div>
         <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Quick Search</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="search-container">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="searchType">
+                                            <option value="ip">IP Works</option>
+                                            <option value="artist">Artists</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-sm-12">
+                                        <div id="ipSearchTabs" class="platform-tabs">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#" data-platform="baidu">Baidu Baike</a></li>
+                                                <li><a href="#" data-platform="mydramalist">Mydramalist</a></li>
+                                                <li><a href="#" data-platform="douban">Douban</a></li>
+                                                <li><a href="#" data-platform="xiaohongshu">Xiaohongshu</a></li>
+                                                <li><a href="#" data-platform="weibo">Weibo</a></li>
+                                                <li><a href="#" data-platform="instagram">Instagram</a></li>
+                                                <li><a href="#" data-platform="youtube">YouTube</a></li>
+                                                <li><a href="#" data-platform="facebook">Facebook</a></li>
+                                                <li><a href="#" data-platform="tiktok">TikTok</a></li>
+                                                <li><a href="#" data-platform="twitter">Twitter</a></li>
+                                            </ul>
+                                        </div>
+                                        <div id="artistSearchTabs" class="platform-tabs" style="display: none;">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#" data-platform="baidu">Baidu Baike</a></li>
+                                                <li><a href="#" data-platform="weibo_personal">Weibo Personal</a></li>
+                                                <li><a href="#" data-platform="weibo_studio">Weibo Studio</a></li>
+                                                <li><a href="#" data-platform="xiaohongshu">Xiaohongshu</a></li>
+                                                <li><a href="#" data-platform="instagram">Instagram</a></li>
+                                                <li><a href="#" data-platform="youtube">YouTube</a></li>
+                                                <li><a href="#" data-platform="facebook">Facebook</a></li>
+                                                <li><a href="#" data-platform="tiktok">TikTok</a></li>
+                                                <li><a href="#" data-platform="twitter">Twitter</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="searchInput" placeholder="Enter search keywords">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-info btn-block" onclick="performSearch()">
+                                            <i class="fa fa-search"></i> Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <div class="panel panel-default">
@@ -416,6 +479,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="xe-widget xe-conversations box2 label-info" onclick="window.open('https://youtube.iiilab.com/', '_blank')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Youtube下载器">
+                                        <div class="xe-comment-entry">
+                                            <div class="xe-user-img">
+                                                <img src="../assets/images/tools/youtube.png" class="img-circle" width="40">
+                                            </div>
+                                            <div class="xe-comment">
+                                                <div class="xe-user-name overflowClip_1">
+                                                    <strong>Youtube Downloader</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -423,13 +500,13 @@
             </div>
         </div>
     </div>
+    <!-- Bottom Scripts -->
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/TweenMax.min.js"></script>
     <script src="../assets/js/resizeable.js"></script>
     <script src="../assets/js/joinable.js"></script>
     <script src="../assets/js/xenon-api.js"></script>
     <script src="../assets/js/xenon-toggles.js"></script>
-    <script src="../assets/js/xenon-widgets.js"></script>
-    <script src="../assets/js/xenon-init.js"></script>
+    <script src="../assets/js/xenon-custom.js"></script>
 </body>
 </html>

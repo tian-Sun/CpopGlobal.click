@@ -1108,6 +1108,32 @@ var public_vars = public_vars || {};
 			}
 		});
 
+		// 监听搜索类型切换
+		$('#searchType').on('change', function() {
+			var type = $(this).val();
+			if(type === 'ip') {
+				$('#ipSearchTabs').show();
+				$('#artistSearchTabs').hide();
+			} else {
+				$('#ipSearchTabs').hide();
+				$('#artistSearchTabs').show();
+			}
+		});
+
+		// 监听平台标签点击
+		$('.platform-tabs .nav-tabs li a').on('click', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			var $this = $(this);
+			var $parent = $this.parent();
+			var $tabs = $parent.closest('.nav-tabs');
+			
+			// 移除其他标签的active状态
+			$tabs.find('li').removeClass('active');
+			// 设置当前标签为active
+			$parent.addClass('active');
+		});
 	});
 
 
@@ -1902,3 +1928,46 @@ function date(format, timestamp) {
 	};
 	return this.date(format, timestamp);
 }
+
+// 执行搜索
+window.performSearch = function() {
+	console.log("执行搜索");  // 调试日志
+	var keyword = $('#searchInput').val().trim();
+	if (!keyword) {
+		alert('请输入搜索关键词');
+		return;
+	}
+
+	var type = $('#searchType').val();
+	var $activeTab = type === 'ip' ? 
+		$('#ipSearchTabs .nav-tabs li.active a') : 
+		$('#artistSearchTabs .nav-tabs li.active a');
+
+	console.log("当前选中的标签:", $activeTab.data('platform')); // 调试日志
+
+	if ($activeTab.length) {
+		var platform = $activeTab.data('platform');
+		
+		// 定义搜索链接配置
+		var searchUrls = {
+			'baidu': 'https://baike.baidu.com/item/' + encodeURIComponent(keyword),
+			'mydramalist': 'https://mydramalist.com/search?q=' + encodeURIComponent(keyword),
+			'douban': 'https://www.douban.com/search?q=' + encodeURIComponent(keyword),
+			'xiaohongshu': 'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent(keyword),
+			'weibo': 'https://s.weibo.com/weibo?q=' + encodeURIComponent(keyword),
+			'weibo_personal': 'https://s.weibo.com/user?q=' + encodeURIComponent(keyword),
+			'weibo_studio': 'https://s.weibo.com/user?q=' + encodeURIComponent(keyword + "工作室"),
+			'instagram': 'https://www.instagram.com/explore/tags/' + encodeURIComponent(keyword),
+			'youtube': 'https://www.youtube.com/results?search_query=' + encodeURIComponent(keyword),
+			'facebook': 'https://www.facebook.com/search/top/?q=' + encodeURIComponent(keyword),
+			'tiktok': 'https://www.tiktok.com/search?q=' + encodeURIComponent(keyword),
+			'twitter': 'https://twitter.com/search?q=' + encodeURIComponent(keyword)
+		};
+
+		// 打开新标签页
+		if (searchUrls[platform]) {
+			console.log("打开URL:", searchUrls[platform]); // 调试日志
+			window.open(searchUrls[platform], '_blank');
+		}
+	}
+};
