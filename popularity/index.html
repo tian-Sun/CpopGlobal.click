@@ -32,12 +32,15 @@
         <div class="popularity-title">Popularity</div>
         <div class="popularity-filters">
             <select id="regionSelect" class="form-control">
-                <option value="global">Global</option>
-                <option value="china">Thailand</option>
+                <option value="worldwide">Global</option>
+                <option value="weibo">China</option>
+                <option value="th">Thailand</option>
+                <option value="vi">Vietnam</option>
+                <option value="id">Indonesia</option>
             </select>
             <select id="timeSelect" class="form-control">
                 <option value="7">Last 7 days</option>
-                <option value="30">Last 14 days</option>
+                <option value="14">Last 14 days</option>
                 <option value="90">Last 90 days</option>
             </select>
         </div>
@@ -46,19 +49,30 @@
         <div class="col-md-3">
             <div class="multiselect" id="nationalityFilter">
                 <strong>Nationality</strong>
-                <label><input type="checkbox" value="Chinese" checked> All</label>
-                <label><input type="checkbox" value="Chinese" checked> Chinese</label>
-                <label><input type="checkbox" value="Korean"> Korean</label>
-                <label><input type="checkbox" value="Japanese"> Japanese</label>
+                <label><input type="checkbox" value="all" checked> All</label>
+                <label><input type="checkbox" value="12"> Chinese Mainland</label>
+                <label><input type="checkbox" value="22"> Chinese Taiwan</label>
+                <label><input type="checkbox" value="23"> Chinese Hong Kong</label>
+                <label><input type="checkbox" value="43"> American</label>
+                <label><input type="checkbox" value="48"> German</label>
+                <label><input type="checkbox" value="49"> Malaysian</label>
+                <label><input type="checkbox" value="56"> Canadian</label>
+                <label><input type="checkbox" value="59"> South Korean</label>
+                <label><input type="checkbox" value="70"> Thailand</label>
             </div>
         </div>
         <div class="col-md-3">
             <div class="multiselect" id="occupationFilter">
                 <strong>Occupation Type</strong>
-                <label><input type="checkbox" value="Actress" checked> All</label>
-                <label><input type="checkbox" value="Actress" checked> Actress</label>
-                <label><input type="checkbox" value="Actor" checked> Actor</label>
-                <label><input type="checkbox" value="Singer"> Singer</label>
+                <label><input type="checkbox" value="all" checked> All</label>
+                <label><input type="checkbox" value="11"> Actor/Actress</label>
+                <label><input type="checkbox" value="17"> Director</label>
+                <label><input type="checkbox" value="18"> Screenwriter</label>
+                <label><input type="checkbox" value="19"> Singer</label>
+                <label><input type="checkbox" value="20"> Dancer</label>
+                <label><input type="checkbox" value="21"> Host</label>
+                <label><input type="checkbox" value="28"> Unknown</label>
+                <label><input type="checkbox" value="50"> Athlete</label>
             </div>
         </div>
     </div>
@@ -91,19 +105,36 @@ const occupationMap = {
     'Singer': 3
 };
 
+// 地区映射
 const dimensionMap = {
-    'global': 'worldwide',
-    'china': 'weibo',
-    'us': 'us' // 这里us仅占位，实际API未必支持
+    'worldwide': 'Global',
+    'weibo': 'China',
+    'th': 'Thailand',
+    'vi': 'Vietnam',
+    'id': 'Indonesia'
 };
 const periodMap = {
     '7': '7day',
-    '30': '14day',
+    '14': '14day',
     '90': '90day'
 };
 
 function getSelectedValues(selector) {
     return $(selector + ' input:checked').map(function() { return this.value; }).get();
+}
+
+function getSelectedOccupationIds() {
+    const checked = $('#occupationFilter input:checked').map(function() { return this.value; }).get();
+    // 只选all或未选时，不传classifications_id
+    if (checked.length === 0 || (checked.length === 1 && checked[0] === 'all')) return [];
+    // 过滤掉all
+    return checked.filter(v => v !== 'all');
+}
+
+function getSelectedRegionIds() {
+    const checked = $('#nationalityFilter input:checked').map(function() { return this.value; }).get();
+    if (checked.length === 0 || (checked.length === 1 && checked[0] === 'all')) return [];
+    return checked.filter(v => v !== 'all');
 }
 
 function renderTable(data) {
@@ -127,39 +158,39 @@ function renderTable(data) {
 }
 
 function fetchData() {
-    const selectedNationalities = getSelectedValues('#nationalityFilter');
-    const selectedOccupations = getSelectedValues('#occupationFilter');
-    const region = $('#regionSelect').val();
-    const time = $('#timeSelect').val();
-
-    // 这里只取第一个国籍和职业（如需多选支持后端需支持数组参数）
-    const region_id = nationalityMap[selectedNationalities[0]] || '';
-    const classifications_id = occupationMap[selectedOccupations[0]] || '';
-    const dimension = dimensionMap[region] || 'worldwide';
-    const period = periodMap[time] || '7day';
+    // 地区
+    const dimension = $('#regionSelect').val();
+    // 时间
+    const period = periodMap[$('#timeSelect').val()] || '7day';
+    // 职业
+    const occupationIds = getSelectedOccupationIds();
+    // 国籍
+    const regionIds = getSelectedRegionIds();
 
     // 组装参数
     const params = {
         period,
         dimension
     };
-    if (classifications_id) params.classifications_id = classifications_id;
-    if (region_id) params.region_id = region_id;
+    if (occupationIds.length === 1) {
+        params.classifications_id = occupationIds[0];
+    } else if (occupationIds.length > 1) {
+        params.classifications_id = occupationIds.join(',');
+    }
+    if (regionIds.length === 1) {
+        params.region_id = regionIds[0];
+    } else if (regionIds.length > 1) {
+        params.region_id = regionIds.join(',');
+    }
+    // status 默认不传
 
-    // 请求API
     $.ajax({
         url: 'https://cpulse-be-staging.ivideocloud.cn/api/v1/admin/data_monitoring_talent',
         method: 'GET',
         data: params,
         success: function(res) {
             if (res && res.data && res.data.data) {
-                // 这里 occupation_type/nationality 需后端返回或前端映射
-                const data = res.data.data.map(item => ({
-                    ...item,
-                    nationality: selectedNationalities[0] || '',
-                    occupation_type: selectedOccupations[0] || ''
-                }));
-                renderTable(data);
+                renderTable(res.data.data);
             } else {
                 renderTable([]);
             }
@@ -170,7 +201,23 @@ function fetchData() {
     });
 }
 
-$('#nationalityFilter input, #occupationFilter input').on('change', fetchData);
+$('#occupationFilter input').on('change', function() {
+    // "全部"被选中时，取消其他选项
+    if ($(this).val() === 'all' && $(this).is(':checked')) {
+        $('#occupationFilter input').not(this).prop('checked', false);
+    } else if ($(this).val() !== 'all') {
+        $('#occupationFilter input[value="all"]').prop('checked', false);
+    }
+    fetchData();
+});
+$('#nationalityFilter input').on('change', function() {
+    if ($(this).val() === 'all' && $(this).is(':checked')) {
+        $('#nationalityFilter input').not(this).prop('checked', false);
+    } else if ($(this).val() !== 'all') {
+        $('#nationalityFilter input[value="all"]').prop('checked', false);
+    }
+    fetchData();
+});
 $('#regionSelect, #timeSelect').on('change', fetchData);
 
 // 初始化
