@@ -79,15 +79,28 @@
 </div>
 <script src="../assets/js/jquery-1.11.1.min.js"></script>
 <script>
-// 假数据
-const mockData = [
-    { cn: '刘亦菲', en: 'Crystal Liu', nationality: 'Chinese', popularity: 21234, occupation: 'Actress' },
-    { cn: '迪丽热巴', en: 'Dilraba', nationality: 'Chinese', popularity: 20398, occupation: 'Actress' },
-    { cn: '肖战', en: 'Lay Zhang', nationality: 'Chinese', popularity: 20110, occupation: 'Actor' },
-    { cn: '赵露思', en: 'Zhao Lusi', nationality: 'Chinese', popularity: 20098, occupation: 'Actress' },
-    { cn: '李敏镐', en: 'Lee Min Ho', nationality: 'Korean', popularity: 18000, occupation: 'Actor' },
-    { cn: '山下智久', en: 'Tomohisa Yamashita', nationality: 'Japanese', popularity: 15000, occupation: 'Singer' }
-];
+// 静态映射（后续可用接口动态获取）
+const nationalityMap = {
+    'Chinese': 1,
+    'Korean': 2,
+    'Japanese': 3
+};
+const occupationMap = {
+    'Actress': 1,
+    'Actor': 2,
+    'Singer': 3
+};
+
+const dimensionMap = {
+    'global': 'worldwide',
+    'china': 'weibo',
+    'us': 'us' // 这里us仅占位，实际API未必支持
+};
+const periodMap = {
+    '7': '7day',
+    '30': '14day',
+    '90': '90day'
+};
 
 function getSelectedValues(selector) {
     return $(selector + ' input:checked').map(function() { return this.value; }).get();
@@ -96,39 +109,73 @@ function getSelectedValues(selector) {
 function renderTable(data) {
     const tbody = $('#popularityTableBody');
     tbody.empty();
+    if (!data || data.length === 0) {
+        tbody.append('<tr><td colspan="5" style="text-align:center;color:#888;">No data</td></tr>');
+        return;
+    }
     data.forEach((item, idx) => {
         tbody.append(`
             <tr>
-                <td>${idx + 1}</td>
-                <td>${item.cn}<br><span style="color:#888;font-size:13px;">${item.en}</span></td>
-                <td>${item.nationality}</td>
-                <td>${item.popularity.toLocaleString()}</td>
-                <td>${item.occupation}</td>
+                <td>${item.popularity_rank || idx + 1}</td>
+                <td>${item.talent_name_sc}<br><span style="color:#888;font-size:13px;">${item.talent_name_en_us || ''}</span></td>
+                <td>${item.nationality || ''}</td>
+                <td>${item.popularity ? item.popularity.toLocaleString() : ''}</td>
+                <td>${item.occupation_type || ''}</td>
             </tr>
         `);
     });
 }
 
-function filterData() {
+function fetchData() {
     const selectedNationalities = getSelectedValues('#nationalityFilter');
     const selectedOccupations = getSelectedValues('#occupationFilter');
-    // 这里将来用接口请求，当前用前端过滤
-    const filtered = mockData.filter(item =>
-        selectedNationalities.includes(item.nationality) &&
-        selectedOccupations.includes(item.occupation)
-    );
-    renderTable(filtered);
+    const region = $('#regionSelect').val();
+    const time = $('#timeSelect').val();
+
+    // 这里只取第一个国籍和职业（如需多选支持后端需支持数组参数）
+    const region_id = nationalityMap[selectedNationalities[0]] || '';
+    const classifications_id = occupationMap[selectedOccupations[0]] || '';
+    const dimension = dimensionMap[region] || 'worldwide';
+    const period = periodMap[time] || '7day';
+
+    // 组装参数
+    const params = {
+        period,
+        dimension
+    };
+    if (classifications_id) params.classifications_id = classifications_id;
+    if (region_id) params.region_id = region_id;
+
+    // 请求API
+    $.ajax({
+        url: 'https://cpulse-be-staging.ivideocloud.cn/api/v1/admin/data_monitoring_talent',
+        method: 'GET',
+        data: params,
+        success: function(res) {
+            if (res && res.data && res.data.data) {
+                // 这里 occupation_type/nationality 需后端返回或前端映射
+                const data = res.data.data.map(item => ({
+                    ...item,
+                    nationality: selectedNationalities[0] || '',
+                    occupation_type: selectedOccupations[0] || ''
+                }));
+                renderTable(data);
+            } else {
+                renderTable([]);
+            }
+        },
+        error: function() {
+            renderTable([]);
+        }
+    });
 }
 
-$('#nationalityFilter input, #occupationFilter input').on('change', filterData);
-$('#regionSelect, #timeSelect').on('change', function() {
-    // 这里将来请求接口，当前直接过滤
-    filterData();
-});
+$('#nationalityFilter input, #occupationFilter input').on('change', fetchData);
+$('#regionSelect, #timeSelect').on('change', fetchData);
 
 // 初始化
 $(function() {
-    filterData();
+    fetchData();
 });
 </script>
 </body>
