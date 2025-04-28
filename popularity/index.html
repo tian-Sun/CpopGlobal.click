@@ -198,6 +198,7 @@ function fetchData() {
         method: 'GET',
         data: params,
         success: function(res) {
+            console.log('接口返回数据:', res.data.data);
             if (res && res.data && res.data.data) {
                 renderTable(res.data.data);
             } else {
