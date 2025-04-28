@@ -145,15 +145,11 @@ function renderTable(data) {
         return;
     }
     data.forEach((item, idx) => {
-        // region和classifications为数组，取name_en_us或name_sc
-        let nationality = '';
-        if (Array.isArray(item.region) && item.region.length > 0) {
-            nationality = item.region.map(r => r.name_en_us || r.name_sc).join(', ');
-        }
-        let occupation = '';
-        if (Array.isArray(item.classifications) && item.classifications.length > 0) {
-            occupation = item.classifications.map(c => c.name_en_us || c.name_sc).join(', ');
-        }
+        // region为对象，occupations为数组，均取英文名
+        let nationality = item.region && item.region.name_en_us ? item.region.name_en_us : '';
+        let occupation = Array.isArray(item.occupations) && item.occupations.length > 0
+            ? item.occupations.map(c => c.name_en_us).join(', ')
+            : '';
         tbody.append(`
             <tr>
                 <td>${item.popularity_rank || idx + 1}</td>
