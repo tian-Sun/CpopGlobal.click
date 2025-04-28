@@ -145,13 +145,22 @@ function renderTable(data) {
         return;
     }
     data.forEach((item, idx) => {
+        // region和classifications为数组，取name_en_us或name_sc
+        let nationality = '';
+        if (Array.isArray(item.region) && item.region.length > 0) {
+            nationality = item.region.map(r => r.name_en_us || r.name_sc).join(', ');
+        }
+        let occupation = '';
+        if (Array.isArray(item.classifications) && item.classifications.length > 0) {
+            occupation = item.classifications.map(c => c.name_en_us || c.name_sc).join(', ');
+        }
         tbody.append(`
             <tr>
                 <td>${item.popularity_rank || idx + 1}</td>
                 <td>${item.talent_name_sc}<br><span style="color:#888;font-size:13px;">${item.talent_name_en_us || ''}</span></td>
-                <td>${item.nationality || ''}</td>
+                <td>${nationality}</td>
                 <td>${item.popularity ? item.popularity.toLocaleString() : ''}</td>
-                <td>${item.occupation_type || ''}</td>
+                <td>${occupation}</td>
             </tr>
         `);
     });
