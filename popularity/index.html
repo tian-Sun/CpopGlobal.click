@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popularity Ranking</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/css/xenon-core.css">
+    <link rel="stylesheet" href="../assets/css/xenon-components.css">
+    <link rel="stylesheet" href="../assets/css/xenon-skins.css">
+    <link rel="stylesheet" href="../assets/css/nav.css">
+    <style>
+        body { background: #fafbfc; }
+        .popularity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .popularity-title { font-size: 2rem; font-weight: bold; }
+        .popularity-filters { display: flex; gap: 16px; }
+        .popularity-filters .form-control { min-width: 160px; max-width: 220px; }
+        .table th, .table td { vertical-align: middle !important; }
+        .multiselect {
+            min-width: 120px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 8px;
+            background: #fff;
+        }
+        .multiselect label { display: block; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top:40px;">
+    <div class="popularity-header">
+        <div class="popularity-title">Popularity</div>
+        <div class="popularity-filters">
+            <select id="regionSelect" class="form-control">
+                <option value="global">Global</option>
+                <option value="china">Thailand</option>
+            </select>
+            <select id="timeSelect" class="form-control">
+                <option value="7">Last 7 days</option>
+                <option value="30">Last 14 days</option>
+                <option value="90">Last 90 days</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom:16px;">
+        <div class="col-md-3">
+            <div class="multiselect" id="nationalityFilter">
+                <strong>Nationality</strong>
+                <label><input type="checkbox" value="Chinese" checked> All</label>
+                <label><input type="checkbox" value="Chinese" checked> Chinese</label>
+                <label><input type="checkbox" value="Korean"> Korean</label>
+                <label><input type="checkbox" value="Japanese"> Japanese</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="multiselect" id="occupationFilter">
+                <strong>Occupation Type</strong>
+                <label><input type="checkbox" value="Actress" checked> All</label>
+                <label><input type="checkbox" value="Actress" checked> Actress</label>
+                <label><input type="checkbox" value="Actor" checked> Actor</label>
+                <label><input type="checkbox" value="Singer"> Singer</label>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th style="width:40px;">#</th>
+            <th>Talent (CN/EN)</th>
+            <th>Nationality</th>
+            <th>Popularity</th>
+            <th>Occupation Type</th>
+        </tr>
+        </thead>
+        <tbody id="popularityTableBody">
+        <!-- 数据行由JS渲染 -->
+        </tbody>
+    </table>
+</div>
+<script src="../assets/js/jquery-1.11.1.min.js"></script>
+<script>
+// 假数据
+const mockData = [
+    { cn: '刘亦菲', en: 'Crystal Liu', nationality: 'Chinese', popularity: 21234, occupation: 'Actress' },
+    { cn: '迪丽热巴', en: 'Dilraba', nationality: 'Chinese', popularity: 20398, occupation: 'Actress' },
+    { cn: '肖战', en: 'Lay Zhang', nationality: 'Chinese', popularity: 20110, occupation: 'Actor' },
+    { cn: '赵露思', en: 'Zhao Lusi', nationality: 'Chinese', popularity: 20098, occupation: 'Actress' },
+    { cn: '李敏镐', en: 'Lee Min Ho', nationality: 'Korean', popularity: 18000, occupation: 'Actor' },
+    { cn: '山下智久', en: 'Tomohisa Yamashita', nationality: 'Japanese', popularity: 15000, occupation: 'Singer' }
+];
+
+function getSelectedValues(selector) {
+    return $(selector + ' input:checked').map(function() { return this.value; }).get();
+}
+
+function renderTable(data) {
+    const tbody = $('#popularityTableBody');
+    tbody.empty();
+    data.forEach((item, idx) => {
+        tbody.append(`
+            <tr>
+                <td>${idx + 1}</td>
+                <td>${item.cn}<br><span style="color:#888;font-size:13px;">${item.en}</span></td>
+                <td>${item.nationality}</td>
+                <td>${item.popularity.toLocaleString()}</td>
+                <td>${item.occupation}</td>
+            </tr>
+        `);
+    });
+}
+
+function filterData() {
+    const selectedNationalities = getSelectedValues('#nationalityFilter');
+    const selectedOccupations = getSelectedValues('#occupationFilter');
+    // 这里将来用接口请求，当前用前端过滤
+    const filtered = mockData.filter(item =>
+        selectedNationalities.includes(item.nationality) &&
+        selectedOccupations.includes(item.occupation)
+    );
+    renderTable(filtered);
+}
+
+$('#nationalityFilter input, #occupationFilter input').on('change', filterData);
+$('#regionSelect, #timeSelect').on('change', function() {
+    // 这里将来请求接口，当前直接过滤
+    filterData();
+});
+
+// 初始化
+$(function() {
+    filterData();
+});
+</script>
+</body>
+</html> 
